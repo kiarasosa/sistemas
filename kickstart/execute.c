@@ -202,4 +202,18 @@ Esperar a que los Procesos Hijos Terminen:
 Si el pipeline debe ejecutarse en primer plano (wait = true), espera a que todos los procesos hijos terminen utilizando waitpid.
 Limpieza Final:
 
-Libera la memoria asignada para almacenar los PIDs de los hijos. */
+Libera la memoria asignada para almacenar los PIDs de los hijos. 
+
+
+execvp(): Ejecuta un nuevo programa, reemplazando el proceso actual.
+dup2(): Duplica un descriptor de archivo, permitiendo redirigir la entrada/salida.
+fork(): Crea un nuevo proceso, que es una copia del proceso actual.
+
+
+grep busca patrones o coincidencias en el contenido de archivos o de la entrada estándar
+
+cat concatena y muestra el contenido de archivos o para combinar varios archivos y mostrar sus contenidos juntos.
+
+sort organiza las líneas de un archivo en orden alfabético o numérico.
+
+head muestra las primeras líneas de un archivo o de la entrada estándar.*/
