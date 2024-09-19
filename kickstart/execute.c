@@ -158,3 +158,48 @@ void execute_pipeline(pipeline apipe) {
     free(pidhijo); 
     free(children_pids); // Libera el arreglo de PIDs
 }
+
+
+
+/* Verificaciones Iniciales:
+
+Asegura que el pipeline no sea NULL.
+Si el pipeline está vacío, termina la función.
+Si el primer comando en el pipeline está vacío, lo elimina y verifica nuevamente si el pipeline está vacío.
+Ejecución de Comandos Internos:
+
+Verifica si el pipeline contiene únicamente un comando interno (builtin).
+Si es así, ejecuta el comando interno utilizando builtin_run y termina la función.
+Configuración para Ejecución en Background:
+
+Si el pipeline debe ejecutarse en background (wait = false), ignora la señal SIGCHLD para prevenir procesos zombies.
+Preparación para la Ejecución del Pipeline:
+
+Obtiene la cantidad de comandos en el pipeline.
+Asigna memoria para almacenar los PIDs de los procesos hijos.
+Inicializa los descriptores de las tuberías.
+Iteración y Ejecución de Cada Comando:
+
+Itera sobre cada comando en el pipeline.
+Para cada comando, realiza lo siguiente:
+Configuración de Tuberías:
+Si no es el primer comando, reutiliza los descriptores de la tubería anterior.
+Si no es el último comando, crea una nueva tubería para conectar con el siguiente comando.
+Creación de Proceso Hijo:
+Llama a fork() para crear un proceso hijo.
+En el Proceso Hijo:
+Si no es el primer comando, redirige la entrada estándar al descriptor de lectura de la tubería anterior.
+Si no es el último comando, redirige la salida estándar al descriptor de escritura de la tubería actual.
+Convierte el comando a cadena para posibles mensajes de error.
+Ejecuta el comando usando execute_scommand.
+Si execute_scommand falla, imprime un mensaje de error y termina el proceso hijo.
+En el Proceso Padre:
+Si no es el primer comando, cierra los descriptores de la tubería anterior.
+Almacena el PID del hijo en el arreglo children_pids.
+Elimina el comando ya ejecutado del pipeline.
+Esperar a que los Procesos Hijos Terminen:
+
+Si el pipeline debe ejecutarse en primer plano (wait = true), espera a que todos los procesos hijos terminen utilizando waitpid.
+Limpieza Final:
+
+Libera la memoria asignada para almacenar los PIDs de los hijos. */
